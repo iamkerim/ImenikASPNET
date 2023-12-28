@@ -42,6 +42,10 @@ namespace Imenik.Pages.Osobe
             {
                 errorMessage = "Netacan format godine rodjenja(dd.mm.yyyy)!";
                 return;
+            } else if (!IsValidEmail(osobaInfo.email))
+            {
+                errorMessage = "Netacan format emaila(example@example.com)!";
+                return;
             } else
             {
                 osobaInfo.age = "" + CalculateAge(osobaInfo.dob);
@@ -102,6 +106,13 @@ namespace Imenik.Pages.Osobe
                 return true;
             }
             return false;
+        }
+
+        private bool IsValidEmail(string value)
+        {
+            var emailRegex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+            return emailRegex.IsMatch(value);
+
         }
         private int? CalculateAge(string Dob)
         {
