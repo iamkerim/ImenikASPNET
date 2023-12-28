@@ -11,7 +11,6 @@ namespace Imenik.Pages.Osobe
         public List<Country> countries = new List<Country>();
         public String errorMessage = "";
         public String successMessage = "";
-
         public void OnGet()
         {
             getCountries();

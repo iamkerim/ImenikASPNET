@@ -22,19 +22,19 @@
 <form method="POST">
     <input type="hidden" name="id" value="@Model.osobaInfo.id" />
     <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">Name</label>
+        <label class="col-sm-3 col-form-label">Ime</label>
         <div class="col-sm-6">
             <input type="text" class="form-control" name="name" value="@Model.osobaInfo.name" />
         </div>
     </div>
     <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">Surname</label>
+        <label class="col-sm-3 col-form-label">Prezime</label>
         <div class="col-sm-6">
             <input type="text" class="form-control" name="surname" value="@Model.osobaInfo.surname" />
         </div>
     </div>
     <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">Phone</label>
+        <label class="col-sm-3 col-form-label">Telefon</label>
         <div class="col-sm-6">
             <input type="text" class="form-control" name="phone" value="@Model.osobaInfo.phone" />
         </div>
@@ -125,14 +125,9 @@
                 data: { countryId: selectedCountryId },
                 type: "GET",
                 success: function (data) {
-                    // Clear existing options in the city dropdown
                     $("#cityDropdown").empty();
-                    // Add new options based on the fetched cities
                     $.each(data, function (index, city) {
                         $("#cityDropdown").append('<option value="' + city.id + '">' + city.name + '</option>');
-                        if (city.id === 1) {
-                            $("#cityDropdown").append('<option selected value="' + city.id + '">' + city.name + '</option>');
-                        }
                     });
                     var selectedCity = $('#cityDropdown').val();
                     $('#selectedValueCity').val(selectedCity);
@@ -142,24 +137,18 @@
                 }
             });
             $("#countryDropdown").change(function () {
-                // Get the selected country id
                 var selectedCountryId = $(this).val();
                 $('#selectedValueCity').val($(this).val());
 
-                // Fetch cities for the selected country
                 $.ajax({
                     url: "/Osobe/Create?handler=CitiesForCountry",
                     data: { countryId: selectedCountryId },
                     type: "GET",
                     success: function (data) {
-                        // Clear existing options in the city dropdown
                         $("#cityDropdown").empty();
-                        // Add new options based on the fetched cities
                         $.each(data, function (index, city) {
                             $("#cityDropdown").append('<option value="' + city.id + '">' + city.name + '</option>');
-                            if (city.id === 11) {
-                                $("#cityDropdown").append('<option selected value="' + city.id + '">' + city.name + '</option>');
-                            }
+                            
                         });
 
                     },

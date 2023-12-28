@@ -10,12 +10,12 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <title>Delete Confirmation Modal</title>
+    <title>Potvrda brisanja</title>
 </head>
 <body>
 <br />
 <h2>Lista Osoba</h2>
-<a class="btn btn-primary btn-small" href="/Osobe/Create">Nova Osoba</a>
+<a class="btn btn-primary btn-small mb-2" href="/Osobe/Create">Nova Osoba</a>
 <table class="table">
     <thead>
         <tr>
@@ -27,7 +27,7 @@
             <th>Grad</th>
             <th>Drzava</th>
             <th>Datum rodjenja</th>
-            <th>Godine</th
+            <th>Godine</th>
             <th>Akcija</th>
         </tr>
     </thead>
@@ -84,33 +84,28 @@
         </div>
 </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#deleteButton').on('click', function () {
+            var id = $('#id').val();
+            var url = 'http://localhost:5201/Osobe/Delete';
+            url += '?id=' + encodeURIComponent(id);
 
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function () {
+                    $('#deleteModal').modal('hide');
+                    location.reload();
+                },
+                error: function (error) {
 
-    <script>
-        $(document).ready(function () {
-            $('#deleteButton').on('click', function () {
-                    var id = $('#id').val();
-                    var url = 'http://localhost:5201/Osobe/Delete';
-                    url += '?id=' + encodeURIComponent(id);
-
-                    $.ajax({
-                        url: url,
-                        type: "GET",
-                        success: function () {
-                            $('#deleteModal').modal('hide');
-                            location.reload();
-                        },
-                        error: function (error) {
-
-                            console.error('Error:', error);
-                        }
-                    });
-                $('#deleteModal').modal('hide');
-
+                    console.error('Error:', error);
+                }
             });
-            $('#deleteModal').modal('hide');
-
         });
-    </script>
+
+    });
+</script>
 </body>
 </html>

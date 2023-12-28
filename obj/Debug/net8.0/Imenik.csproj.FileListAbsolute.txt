@@ -36,3 +36,4 @@ C:\NETDevelopment\Imenik\Imenik\obj\Debug\net8.0\refint\Imenik.dll
 C:\NETDevelopment\Imenik\Imenik\obj\Debug\net8.0\Imenik.pdb
 C:\NETDevelopment\Imenik\Imenik\obj\Debug\net8.0\Imenik.genruntimeconfig.cache
 C:\NETDevelopment\Imenik\Imenik\obj\Debug\net8.0\ref\Imenik.dll
+C:\NETDevelopment\Imenik\Imenik\obj\Debug\net8.0\Imenik.sourcelink.json
