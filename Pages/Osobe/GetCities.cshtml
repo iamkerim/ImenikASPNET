@@ -1,0 +1,43 @@
+﻿@page
+@using System.Data.SqlClient;
+@{
+    try
+    {
+        String id = Request.Query["id"];
+        List<Country> countries = new List<Country>();
+
+        String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Imenik;Integrated Security=True;TrustServerCertificate=True;";
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            String sql = "SELECT * FROM Countries WHERE id=@id";
+
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@id", id);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Country country = new Country();
+                        country.id = reader.GetInt32(0);
+                        country.name = reader.GetString(1);
+                        countries.Add(country);
+                    }
+
+
+                }
+
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+    }
+
+
+    Response.Redirect("/Osobe/Index");
+
+
+}

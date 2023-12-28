@@ -1,0 +1,165 @@
+﻿@page
+@model Imenik.Pages.Osobe.CreateModel
+@{
+}
+<html>
+<head>
+    <title>Create</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+<br />
+<h2>Nova osoba</h2>
+
+@if(Model.errorMessage.Length > 0)
+{
+    Model.getCountries();
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form method="POST">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="name" value="@Model.osobaInfo.name" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Surname</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="surname" value="@Model.osobaInfo.surname" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Phone</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="phone" value="@Model.osobaInfo.phone" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Spol</label>
+        <div class="col-sm-6">
+            <select id="genderDropdown" name="gender">
+                <option value="Musko">Musko</option>
+                <option value="Zensko">Zensko</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="email" value="@Model.osobaInfo.email" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Drzava</label>
+        <div class="col-sm-6">
+            <select id="countryDropdown" name="country">
+                @foreach (var item in Model.countries)
+                {
+                    <option value="@item.id">@item.name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Grad</label>
+        <div class="col-sm-6">
+            <select id="cityDropdown">
+                <option value="" disabled selected hidden>Izaberi Grad</option>
+
+            </select>
+                <input type="hidden" class="form-control" id="selectedValueCity" name="selectedValueCity" />
+         </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Datum rodjenja</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="dob" value="@Model.osobaInfo.dob" />
+        </div>
+    </div>
+
+    @if (Model.successMessage.Length > 0)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>@Model.successMessage</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Sacuvaj</button>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/" role="button">Odustani</a>
+        </div>
+    </div>
+</form>
+
+<script>
+        $(document).ready(function () {
+            var selectedCountryId = $('#countryDropdown').val();
+
+            // Fetch cities for the selected country
+            $.ajax({
+                url: "/Osobe/Create?handler=CitiesForCountry",
+                data: { countryId: selectedCountryId },
+                type: "GET",
+                success: function (data) {
+                    // Clear existing options in the city dropdown
+                    $("#cityDropdown").empty();
+                    // Add new options based on the fetched cities
+                    $.each(data, function (index, city) {
+                        $("#cityDropdown").append('<option value="' + city.id + '">' + city.name + '</option>');
+                        if (city.id === 1) {
+                            $("#cityDropdown").append('<option selected value="' + city.id + '">' + city.name + '</option>');
+                        }
+                    });
+                    var selectedCity = $('#cityDropdown').val();
+                    $('#selectedValueCity').val(selectedCity);
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+            $("#countryDropdown").change(function () {
+                // Get the selected country id
+                var selectedCountryId = $(this).val();
+                $('#selectedValueCity').val($(this).val());
+
+                // Fetch cities for the selected country
+                $.ajax({
+                    url: "/Osobe/Create?handler=CitiesForCountry",
+                    data: { countryId: selectedCountryId },
+                    type: "GET",
+                    success: function (data) {
+                        // Clear existing options in the city dropdown
+                        $("#cityDropdown").empty();
+                        // Add new options based on the fetched cities
+                        $.each(data, function (index, city) {
+                            $("#cityDropdown").append('<option value="' + city.id + '">' + city.name + '</option>');
+                            if(city.id === 11) {
+                                $("#cityDropdown").append('<option selected value="' + city.id + '">' + city.name + '</option>');
+                            }
+                        });
+
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
+            $("#cityDropdown").change(function () {
+                var selectedValue = $(this).val();
+                console.log(selectedValue);
+                $('#selectedValueCity').val(selectedValue);
+            });
+        });
+</script>
+</body>
+</html>
