@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Imenik")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82779f5954a89db00e9b11f5a4e3c3f4c52db895")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b3a5356cd12768efe1b573dbae8881d20e884ed")]
 [assembly: System.Reflection.AssemblyProductAttribute("Imenik")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Imenik")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

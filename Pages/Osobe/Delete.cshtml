@@ -1,26 +1,15 @@
 ﻿@page
 @using System.Data.SqlClient;
+@using Pages.Helpers
 @{
-    try
+    String id = Request.Query["id"];
+    Database database = new Database();
+    String deleteResult = database.deletePersonFromDB(id);
+    if(deleteResult != "Success")
     {
-        String id = Request.Query["id"];
-
-        String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Imenik;Integrated Security=True;TrustServerCertificate=True;";
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            connection.Open();
-            String sql = "DELETE FROM Person WHERE id=@id";
-
-            using (SqlCommand command = new SqlCommand(sql, connection))
-            {
-                command.Parameters.AddWithValue("@id", id);
-                command.ExecuteNonQuery();
-            }
-        }
-    }
-    catch (Exception ex)
+        Response.Headers.Add("Custom-Header", deleteResult);
+    } else
     {
+        Response.Redirect("/Osobe/Index");
     }
-
-    Response.Redirect("/Osobe/Index");
 }
